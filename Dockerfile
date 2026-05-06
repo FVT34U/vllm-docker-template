@@ -1,0 +1,1 @@
+FROM vllm/vllm-openai:v0.18.0-cu130
