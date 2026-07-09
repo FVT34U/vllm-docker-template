@@ -22,7 +22,7 @@ docker run --gpus all \
   --model ${MODEL_NAME} \
   --trust-remote-code \
   --dtype auto \
-  --gpu-memory-utilization 0.9 \
+  --gpu-memory-utilization 0.98 \
   --max-model-len ${MODEL_LEN} \
   --enable-auto-tool-choice \
   --tool-call-parser hermes

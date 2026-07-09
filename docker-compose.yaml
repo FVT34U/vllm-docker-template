@@ -1,0 +1,27 @@
+services:
+  vllm:
+    image: vllm/vllm-openai:v0.18.0-cu130
+    container_name: "${USER}_vllm"
+    ports:
+      - "8086:8000"
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    environment:
+      - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN}
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+    command: >
+      --model ${MODEL_NAME}
+      --trust-remote-code
+      --dtype auto
+      --gpu-memory-utilization 0.98
+      --max-model-len ${MODEL_LEN}
+      --enable-auto-tool-choice
+      --tool-call-parser hermes
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
